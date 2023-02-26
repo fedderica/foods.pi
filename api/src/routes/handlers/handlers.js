@@ -1,3 +1,5 @@
+const { createRecipe } = require("../../controllers/recipecontrols");
+
 const handler1 =  (req, res) => {
     const { id } = req.params;
     res.send(`Va a enviar el detalle de el usuario de Id ${id}`);
@@ -14,15 +16,32 @@ const handler2 =  (req, res) => {
     };
 
 
-const handler3 = (req, res) => {
-     const {  name, sumary, score, healthScore, image, steps, namedieta } = req.body;
-    console.log( {  name, sumary, score, healthScore, image, steps, namedieta } )
-         res.send(`Debería crear una receta nueva con estos datos`)
+const handler3 = async (req, res) => {
+//     const {  name, sumary, score, healthScore, image, steps, namedieta } = req.body;
+  //  res.send(`Debería crear una receta nueva con estos datos:
+    //      name:${name},
+      //     sumary:${sumary},
+        //    score:${score},
+          //   healthScore:${healthScore},}
+            //  image:${image},
+              // steps:${steps},
+                //namedieta:${namedieta}     
+
+                try {
+                    const { name, sumary, score, healthScore, image, steps, namedieta } = req.body;
+                    const newRecipe = await createRecipe( name, sumary, score, healthScore, image, steps, namedieta );
+                res.status(201).json(newRecipe);
+} catch (error) {
+ res.status(400).json({ error: error.message});
+}
+};
+          //`);
+
           
     //res.send.NIY: -  Esta ruta recibirá todos los datos necesarios para crear una nueva receta y relacionarla con los tipos de dieta solicitados.
    // -  Toda la información debe ser recibida por body.
     //-  Debe crear la receta en la base de datos, y esta debe estar relacionada con los tipos de dieta indicados (al menos uno)}
-}
+
 const handler4 = (req, res) => {
    
 //-  Obtiene un arreglo con todos los tipos de dietas existentes.
